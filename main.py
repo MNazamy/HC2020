@@ -37,7 +37,6 @@ for i in range (numLibraries):
     tempLib["NumBooksInThisLibrary"] = int(words[0])
     tempLib["SignupProcess"] = int(words[1])
     tempLib["BooksPerDay"] = int(words[2])
-    
     line = f.readline()
     tempBooks = line.split(" ")
     bookArray = []
@@ -45,8 +44,8 @@ for i in range (numLibraries):
         bookArray.append(books[int(_)])
         
     tempLib["BooksArray"] = bookArray;
-    lib = Library(tempLib)
 
+    lib = Library(tempLib)
     lib.print()
 
 
