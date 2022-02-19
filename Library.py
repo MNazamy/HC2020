@@ -1,5 +1,6 @@
 import Event
 from queue import PriorityQueue
+import math
 
 class Library:
 
@@ -23,8 +24,14 @@ class Library:
         print(printString)
 
     def signUpScore(self):
-        pass
-
+        sur = self.signUpProcess * self.signUpProcess
+        br = self.booksPerDay * self.booksPerDay
+        bnum = self.numBooks * self.numBooks
+        daysforallbooks = bnum/br
+        bscore = self.calcScore() * self.calcScore
+        scoreperday = daysforallbooks/bscore
+        return (math.sqrt(scoreperday/sur))
+      
     def calcScore(self):
         total = 0
         for i in self.books:
