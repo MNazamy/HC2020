@@ -11,6 +11,8 @@ def calcScore( tempLib, bookScores):
 
 
 inputFile = "a_example.txt"
+
+
 f = open(inputFile, "r")
 
 firstLine = f.readline()
@@ -49,4 +51,3 @@ for i in range (numLibraries):
 
 
 
-    
