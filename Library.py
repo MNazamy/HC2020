@@ -14,3 +14,19 @@ class Library:
             bookString += str(i) + " "
         
         print("---------------------\nLibrary ID: " + str(self.id) + "\nnumBooks " + str(self.numBooks) + "\nSign Up Length " + str(self.signUpProcess) + "\n Books Shipped Per Day" + str(self.booksPerDay ) + "\n Books : " + bookString + " \n Score: " + str(self.score))
+
+    
+    def signUpScore(self):
+        pass
+
+    def calcScore(self):
+        pass
+
+    def signUp(self):
+        pass
+
+    def readBooks(self):
+        pass
+
+    def endSignUp(self):
+        pass
