@@ -5,3 +5,6 @@ class Book:
     
     def getScore(self):
         return self.score
+
+    def getID(self):
+        return self.id

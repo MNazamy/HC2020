@@ -1,3 +1,5 @@
+import math
+
 class Library:
 
     def __init__(self, tempLib):
@@ -17,7 +19,13 @@ class Library:
 
     
     def signUpScore(self):
-        pass
+        sur = self.signUpProcess * self.signUpProcess
+        br = self.booksPerDay * self.booksPerDay
+        bnum = self.numBooks * self.numBooks
+        daysforallbooks = bnum/br
+        bscore = self.calcScore() * self.calcScore
+        scoreperday = daysforallbooks/bscore
+        return (math.sqrt(scoreperday/sur))
 
     def calcScore(self):
         pass
