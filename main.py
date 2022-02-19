@@ -1,3 +1,4 @@
+from Book import Book
 from Library import Library
 
 def calcScore( tempLib, bookScores):
@@ -6,11 +7,7 @@ def calcScore( tempLib, bookScores):
         score += int(bookScores[i] )
     
     return score
-
-
-
 inputFile = "a_example.txt"
-
 
 f = open(inputFile, "r")
 
@@ -24,6 +21,9 @@ numDays = int ( words[2] )
 
 secondLine = f.readline()
 bookScores = secondLine.split(" ")
+books = []
+for _ in range(len(bookScores)):
+    books.append(Book(_, int(bookScores[_])))
 
 Libraries = {}
 
@@ -43,10 +43,13 @@ for i in range (numLibraries):
     lib = Library(tempLib)
     lib.print()
 
+    bookArray = []
+    for _ in tempBooks:
+        bookArray.append(books[int(_)])
+    libraries[i]["BooksArray"] = bookArray;
 
 
 
 
 
-
-
+    
