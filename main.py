@@ -3,10 +3,12 @@ from Library import Library
 
 def calcScore( tempLib, bookScores):
     score =0 
-    for i in range ( len(tempLib["BooksArray"])):
-        score += int(bookScores[i] )
+    for i in tempLib["BooksArray"]:
+        score += i.getScore()
     
     return score
+
+
 inputFile = "a_example.txt"
 
 f = open(inputFile, "r")
@@ -32,21 +34,21 @@ for i in range (numLibraries):
     line = f.readline()
     words = line.split(" ")
     tempLib["id"] = i
-    tempLib["NumBooksInThisLibrary"] = words[0]
-    tempLib["SignupProcess"] = words[1]
-    tempLib["BooksPerDay"] = words[2]
+    tempLib["NumBooksInThisLibrary"] = int(words[0])
+    tempLib["SignupProcess"] = int(words[1])
+    tempLib["BooksPerDay"] = int(words[2])
     line = f.readline()
-    books = line.split(" ")
-    tempLib["BooksArray"] = books
+    tempBooks = line.split(" ")
+    bookArray = []
+    for _ in tempBooks:
+        bookArray.append(books[int(_)])
+        
+    tempLib["BooksArray"] = bookArray;
+
     tempLib["Score"] = calcScore(tempLib, bookScores)
 
     lib = Library(tempLib)
     lib.print()
-
-    bookArray = []
-    for _ in tempBooks:
-        bookArray.append(books[int(_)])
-    libraries[i]["BooksArray"] = bookArray;
 
 
 

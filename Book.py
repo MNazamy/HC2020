@@ -3,3 +3,5 @@ class Book:
         self.id = i
         self.score = s
     
+    def getScore(self):
+        return self.score
