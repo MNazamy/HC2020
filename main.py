@@ -1,5 +1,4 @@
 from Library import Library
-from Book import Book
 
 def calcScore( tempLib, bookScores):
     score =0 
