@@ -1,5 +1,6 @@
 from Book import Book
 from Library import Library
+import heapq
 
 def calcScore( tempLib, bookScores):
     score =0 
@@ -8,6 +9,12 @@ def calcScore( tempLib, bookScores):
     
     return score
 
+
+def requeue(it, func):
+    h = []
+    for _ in it:
+        heapq.heappush(h, (func, _))
+    
 
 inputFile = "a_example.txt"
 
@@ -50,6 +57,35 @@ for i in range (numLibraries):
 
 
 
+finalLibraryList = []
+activeLibraries = [] #ordered by negative reading speed
+signUpQueue = [] #ordered by
+signUpLeft = 0
 
+startDay = signUpQueue[0][1].signUpProcess #start main process after first is library is done signing up
+
+
+for D in range(numDays-startDay):
+    if signUpLeft == 0 and len(signUpQueue > 0):
+        thisLibrary = heapq.heappop(signUpQueue)[1]
+        heapq.heappush(activeLibraries, (thisLibrary.booksPerDay, thisLibrary))
+        finalLibraryList.append(thisLibrary)
+        signUpLeft = signUpQueue[0][1].signUpProcess - 1
+    elif len(signUpQueue) > 0:
+        signUpLeft -= 1
+    
+    tempStore = []
+
+    while len(activeLibraries) > 0:
+        thisLibrary = heapq.heappop(activeLibraries)[1]
+        tempStore.append(thisLibrary)
+        thisLibrary.readBooks(D)
+    
+    for _ in tempStore:
+        if not _.isEmpty():
+            heapq.heappush(activeLibraries, (_.booksPerDay, _))
+
+
+    
 
     
