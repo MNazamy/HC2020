@@ -1,6 +1,6 @@
 import Library
 
-class Event(object):
+class Event:
 
     def __init__(self, t, lib, isEnded):
         self.time = t

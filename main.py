@@ -1,5 +1,6 @@
 from Book import Book
 from Library import Library
+from Event import Event
 import heapq
 
 def calcScore( tempLib, bookScores):
@@ -10,10 +11,13 @@ def calcScore( tempLib, bookScores):
     return score
 
 
-def requeue(it, func):
+def requeue(pq):
     h = []
-    for _ in it:
-        heapq.heappush(h, (func, _))
+    size = len(pq)
+    for _ in range(size):
+        temp = heapq.heappop(pq)[1]
+        heapq.heappush(h, (temp.signUpScore(), temp))
+    return h
     
 
 inputFile = "a_example.txt"
@@ -34,7 +38,7 @@ books = []
 for _ in range(len(bookScores)):
     books.append(Book(_, int(bookScores[_])))
 
-Libraries = {}
+Libraries = []
 
 for i in range (numLibraries):
     tempLib = {}
@@ -50,27 +54,34 @@ for i in range (numLibraries):
     for _ in tempBooks:
         bookArray.append(books[int(_)])
         
-    tempLib["BooksArray"] = bookArray;
+    tempLib["BooksArray"] = bookArray
 
     lib = Library(tempLib)
-    lib.print()
+    Libraries.append(lib)
 
 
-
+total_signed_up = 0
 finalLibraryList = []
 activeLibraries = [] #ordered by negative reading speed
 signUpQueue = [] #ordered by
 signUpLeft = 0
 
+#add the libraries to the sign-up queue ordered by their signup score
+for _ in Libraries:
+    heapq.heappush(signUpQueue, (_.signUpScore(), _))
+
+
+
 startDay = signUpQueue[0][1].signUpProcess #start main process after first is library is done signing up
 
 
 for D in range(numDays-startDay):
-    if signUpLeft == 0 and len(signUpQueue > 0):
+    if signUpLeft == 0 and len(signUpQueue) > 0:
         thisLibrary = heapq.heappop(signUpQueue)[1]
         heapq.heappush(activeLibraries, (thisLibrary.booksPerDay, thisLibrary))
         finalLibraryList.append(thisLibrary)
         signUpLeft = signUpQueue[0][1].signUpProcess - 1
+        total_signed_up += 1
     elif len(signUpQueue) > 0:
         signUpLeft -= 1
     
@@ -85,6 +96,14 @@ for D in range(numDays-startDay):
         if not _.isEmpty():
             heapq.heappush(activeLibraries, (_.booksPerDay, _))
 
+    signUpQueue = requeue(signUpQueue)
+
+outp = "output.txt"
+
+with open(outp) as file:
+    file.write(str(total_signed_up) + "\n")
+    for _ in finalLibraryList:
+        file.write(_.createOutputString())
 
     
 

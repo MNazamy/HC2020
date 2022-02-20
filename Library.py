@@ -1,5 +1,5 @@
 
-import Event
+from Event import Event
 from queue import PriorityQueue
 import math
 
@@ -32,7 +32,7 @@ class Library:
         br = self.booksPerDay * self.booksPerDay
         bnum = self.numBooks * self.numBooks
         daysforallbooks = bnum/br
-        bscore = self.calcScore() * self.calcScore
+        bscore = self.score * self.score
         scoreperday = daysforallbooks/bscore
         return (math.sqrt(scoreperday/sur))
       
