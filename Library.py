@@ -1,3 +1,4 @@
+
 import Event
 from queue import PriorityQueue
 import math
@@ -12,6 +13,9 @@ class Library:
             self.booksRead = []
             self.books = tempLib["BooksArray"] 
             self.queue = PriorityQueue()
+            for book in self.books:
+                self.queue.put ( (-1*book.getScore(),book ))
+
             self.calcScore()
 
     def print(self):
@@ -20,7 +24,7 @@ class Library:
             bookString += str(i.getId()) + " "
         
         printString = ( "---------------------\nLibrary ID: " + str(self.id) + "\nnumBooks " + str(self.numBooks) + "\nSign Up Length: " + str(self.signUpProcess))
-        printString += ( "\nBooks Shipped Per Day: " + str(self.booksPerDay ) + "\nBooks: " + bookString + " \n Score: " + str(self.score))
+        printString += ( "\nBooks Shipped Per Day: " + str(self.booksPerDay ) + "\nBooks: " + bookString + " \nScore: " + str(self.score))
         print(printString)
 
     def signUpScore(self):
@@ -44,20 +48,38 @@ class Library:
         return ev
 
     def readBooks(self, day):
-        bookIds = []
+        self.updateQueue()
         for _ in range(self.booksPerDay):
             self.booksRead.append( self.queue.get()[1] )
-            bookIds.append(self.booksRead[-1].getId())
-        
+            self.booksRead[-1].setScore(0)
 
         rb = Event(day+1,self,False)
-
-        return bookIds, rb
-        
+        return rb
 
     def endSignUp(self,day):
-        for book in self.books:
-            self.queue.put ( (-1*book.getScore(),book ))
-
         rb = Event(day+1,self, False)
         return rb
+
+    def updateQueue(self):
+        bookList = []
+        while not self.queue.empty():
+            bookList.append(self.queue.get()[1])
+        
+        for book in bookList:
+            if book.getScore() != 0:
+                self.queue.put ( (-1*book.getScore(),book ))
+        
+        self.calcScore()
+        
+    def isEmpty(self):
+        return self.queue.empty()
+
+    def createOutputString(self):
+        output = "\n" + str(self.id) + " " + str(len(self.booksRead) ) + "\n"
+        for book in self.booksRead:
+            output += str(book.getId() + " ")
+        
+        return output
+
+    def getScore(self):
+        return self.score
