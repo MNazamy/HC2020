@@ -15,8 +15,23 @@ class Library:
             self.queue = PriorityQueue()
             for book in self.books:
                 self.queue.put ( (-1*book.getScore(), book ))\
-
+            
             self.calcScore()
+
+    def __eq__(self,other):
+        return self.id == other.getId()
+
+    def __lt__(self, other):
+        if self.score == other.getScore():
+            return self.id < other.getId()
+        else:
+            return self.score < other.getScore()
+
+    def getId(self):
+        return self.id
+
+    def getScore(self):
+        return self.score
 
     def print(self):
         bookString = ""
@@ -40,7 +55,7 @@ class Library:
         total = 0
         for i in self.books:
             total += i.getScore()
-
+            
         self.score = total
 
     def signUp(self,day):
@@ -66,11 +81,12 @@ class Library:
         while not self.queue.empty():
             bookList.append(self.queue.get()[1])
         
+        sc = 0 
         for book in bookList:
             if book.getScore() != 0:
                 self.queue.put ( (-1*book.getScore(),book ))
-        
-        self.calcScore()
+                sc += book.getScore()
+        self.score = sc
         
     def isEmpty(self):
         return self.queue.empty()
