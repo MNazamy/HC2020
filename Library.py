@@ -39,8 +39,7 @@ class Library:
     def calcScore(self):
         total = 0
         for i in self.books:
-            if i not in self.booksRead:
-                total += i.getScore()
+            total += i.getScore()
 
         self.score = total
 
@@ -70,5 +69,17 @@ class Library:
             if book.getScore() != 0:
                 self.queue.put ( (-1*book.getScore(),book ))
         
+        self.calcScore()
+        
     def isEmpty(self):
         return self.queue.empty()
+
+    def createOutputString(self):
+        output = "\n" + str(self.id) + " " + str(len(self.booksRead) ) + "\n"
+        for book in self.booksRead:
+            output += str(book.getId() + " ")
+        
+        return output
+
+    def getScore(self):
+        return self.score
