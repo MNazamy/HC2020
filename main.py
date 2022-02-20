@@ -20,7 +20,7 @@ def requeue(pq):
     return h
     
 
-inputFile = "a_example.txt"
+inputFile = "b_read_on.txt"
 
 f = open(inputFile, "r")
 
@@ -80,8 +80,9 @@ for D in range(numDays-startDay):
         thisLibrary = heapq.heappop(signUpQueue)[1]
         heapq.heappush(activeLibraries, (thisLibrary.booksPerDay, thisLibrary))
         finalLibraryList.append(thisLibrary)
-        signUpLeft = signUpQueue[0][1].signUpProcess - 1
         total_signed_up += 1
+        if len(signUpQueue) > 0:
+            signUpLeft = signUpQueue[0][1].signUpProcess - 1
     elif len(signUpQueue) > 0:
         signUpLeft -= 1
     
@@ -100,8 +101,8 @@ for D in range(numDays-startDay):
 
 outp = "output.txt"
 
-with open(outp) as file:
-    file.write(str(total_signed_up) + "\n")
+with open(outp, "w") as file:
+    file.write(str(total_signed_up))
     for _ in finalLibraryList:
         file.write(_.createOutputString())
 

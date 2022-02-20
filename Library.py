@@ -14,7 +14,7 @@ class Library:
             self.books = tempLib["BooksArray"] 
             self.queue = PriorityQueue()
             for book in self.books:
-                self.queue.put ( (-1*book.getScore(),book ))
+                self.queue.put ( (-1*book.getScore(), book ))\
 
             self.calcScore()
 
@@ -50,8 +50,9 @@ class Library:
     def readBooks(self, day):
         self.updateQueue()
         for _ in range(self.booksPerDay):
-            self.booksRead.append( self.queue.get()[1] )
-            self.booksRead[-1].setScore(0)
+            if not self.queue.empty():
+                self.booksRead.append( self.queue.get()[1] )
+                self.booksRead[-1].setScore(0)
 
         rb = Event(day+1,self,False)
         return rb
@@ -77,7 +78,7 @@ class Library:
     def createOutputString(self):
         output = "\n" + str(self.id) + " " + str(len(self.booksRead) ) + "\n"
         for book in self.booksRead:
-            output += str(book.getId() + " ")
+            output += str(book.getId() )+ " "
         
         return output
 
